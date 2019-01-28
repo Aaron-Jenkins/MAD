@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Mapping</string>
+    <string name="goBtn">Go!</string>
+    <string name="latTv">Lat:</string>
+    <string name="longTv">Long:</string>
+    <string name="latEt">Latitude</string>
+    <string name="longEt">Longitude</string>
 </resources>

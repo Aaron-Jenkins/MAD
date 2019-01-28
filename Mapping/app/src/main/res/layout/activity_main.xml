@@ -4,12 +4,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+
+    <RelativeLayout android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv1"
+        android:text="@string/latTv"/>
+
+        <EditTeg
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/tv1"
+            android:id="@+id/et1"
+            android:text="@string/latEt"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv1"
+        android:id="@+id/tv2"
+        android:text="@string/longTv"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tv2"
+        android:id="@+id/et2"
+        android:text="@string/longEt"/>
+
+        <!--
+    <Button android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv2"
+        android:id="@+id/btn1"
+        android:text="@string/goBtn" />
+-->
+
+</RelativeLayout>
     <org.osmdroid.views.MapView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="50dp"
         android:enabled="true"
         android:clickable="true"
         android:id="@+id/map1"
         tilesource="Mapnik"
         />
+
+
+
 </LinearLayout>
