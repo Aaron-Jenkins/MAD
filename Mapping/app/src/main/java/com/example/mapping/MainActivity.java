@@ -32,6 +32,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
         setContentView(R.layout.activity_main);
 
+        mv = findViewById(R.id.map1);
+        mv.setBuiltInZoomControls(true);
+        mv.getController().setZoom(zoom);
+        mv.getController().setCenter(new GeoPoint(latitude, longitude));
+
         /*
         TextView tv1 = (TextView) findViewById(R.id.tv1);
         EditText et1 = (EditText) findViewById(R.id.et1);
