@@ -34,6 +34,4 @@ public class MapChooseActivity extends AppCompatActivity implements View.OnClick
         setResult(RESULT_OK,intent);
         finish();
     }
-
-
 }

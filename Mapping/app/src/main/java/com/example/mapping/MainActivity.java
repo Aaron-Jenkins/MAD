@@ -20,6 +20,9 @@ import org.osmdroid.views.MapView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
     MapView mv;
+    Double latitude = 51.05;
+    Double longitude = -0.72;
+    Integer zoom = 16;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // This line sets the user agent, a requirement to download OSM maps
         Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
         setContentView(R.layout.activity_main);
+
         /*
         TextView tv1 = (TextView) findViewById(R.id.tv1);
         EditText et1 = (EditText) findViewById(R.id.et1);
@@ -36,57 +40,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button b = (Button)findViewById(R.id.btn1);
         b.setOnClickListener(this);
         */
-        mv = (MapView)findViewById(R.id.map1);
-        mv.setBuiltInZoomControls(true);
-        mv.getController().setZoom(16);
-        mv.getController().setCenter(new GeoPoint( 51.05,-0.72));
-
-    }
-
-    public Double parseLat (EditText geoEditText) {
-        String input = geoEditText.getText().toString();
-        try {
-            //parse string to double
-            Double latitude = Double.parseDouble(input);
-            //validate data
-            if (latitude > 90 || latitude < -90) {
-                geoEditText.setText(""); //reset text if data invalid
-                geoEditText.setHint("invalid latitude: " + input);
-                String message = "invalid latitude";
-                new AlertDialog.Builder(this).setPositiveButton("OK", null).setMessage(message).show();
-                return null;
-            }
-            return latitude;
-        } catch (Exception e) {
-            geoEditText.setText("");
-            geoEditText.setHint("invalid latitude: " + input);
-            String message = "invalid latitude: " + input;
-            new AlertDialog.Builder(this).setPositiveButton("OK", null).setMessage(message).show();
-            return null;
-        }
-    }
-
-    public Double parseLong (EditText geoEditText) {
-        String input = geoEditText.getText().toString();
-        try {
-            //parse string to double
-            Double longitude = Double.parseDouble(input);
-            //validate data
-            if (longitude > 90 || longitude < -90) {
-                geoEditText.setText(""); //reset text if data invalid
-                geoEditText.setHint("invalid longitude: " + input);
-                String message = "invalid longitude";
-                new AlertDialog.Builder(this).setPositiveButton("OK", null).setMessage(message).show();
-                return null;
-            }
-            return longitude;
-        } catch (Exception e) {
-            geoEditText.setText("");
-            geoEditText.setHint("invalid longitude: " + input);
-            String message = "invalid longitude: " + input;
-            new AlertDialog.Builder(this).setPositiveButton("OK", null).setMessage(message).show();
-            return null;
-        }
     }
 
     public void onClick(View view) {
@@ -114,6 +67,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             Intent intent = new Intent(this,MapChooseActivity.class);
             startActivityForResult(intent,0);
+            return true;
+        } else if (item.getItemId() == R.id.SetLocation) {
+            Intent requestIntent = new Intent(this,SetLocationActivity.class);
+            Bundle bundle=new Bundle();
+            bundle.putDouble("com.example.mapping.latitude",latitude);
+            bundle.putDouble("com.example.mapping.longitude",longitude);
+            bundle.putInt("com.example.mapping.zoom",zoom);
+            requestIntent.putExtras(bundle);
+            startActivityForResult(requestIntent,1);
             return true;
         }
         return false;
