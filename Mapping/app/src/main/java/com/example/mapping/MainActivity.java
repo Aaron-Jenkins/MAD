@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
         setContentView(R.layout.activity_main);
 
+        //center map
         mv = findViewById(R.id.map1);
         mv.setBuiltInZoomControls(true);
         mv.getController().setZoom(zoom);
@@ -86,24 +87,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
-    protected void onActivityResult(int requestCode,int resultCode,Intent intent)
-    {
+    protected void onActivityResult(int requestCode,int resultCode,Intent intent) {
 
-        if(requestCode==0)
-        {
+        if (requestCode == 0) {
 
-            if (resultCode==RESULT_OK)
-            {
-                Bundle extras=intent.getExtras();
+            if (resultCode == RESULT_OK) {
+                Bundle extras = intent.getExtras();
                 boolean hikebikemap = extras.getBoolean("com.example.hikebikemap");
-                if(hikebikemap==true)
-                {
+                if (hikebikemap == true) {
                     mv.setTileSource(TileSourceFactory.HIKEBIKEMAP);
-                }
-                else
-                {
+                } else {
                     mv.setTileSource(TileSourceFactory.MAPNIK);
                 }
+            }
+        } else if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Bundle extras = intent.getExtras();
+                latitude = extras.getDouble("com.example.mapping.laitude");
+                longitude = extras.getDouble("com.example.mapping.longitude");
+                zoom = extras.getInt("com.example.mapping.zoom");
+                mv = findViewById(R.id.map1);
+                mv.setBuiltInZoomControls(true);
+                mv.getController().setZoom(zoom);
+                mv.getController().setCenter(new GeoPoint(latitude, longitude));
             }
         }
     }
