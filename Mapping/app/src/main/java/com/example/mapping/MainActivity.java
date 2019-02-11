@@ -5,6 +5,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -91,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(requestCode==0)
         {
-
             if (resultCode==RESULT_OK)
             {
                 Bundle extras=intent.getExtras();
@@ -102,8 +102,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 else
                 {
+
                     mv.setTileSource(TileSourceFactory.MAPNIK);
                 }
+            }
+        } else  if(requestCode==1) {
+            Log.wtf("reqcode","request code is 1");
+            // result from  choose location activity
+            if (resultCode == RESULT_OK) {
+                Bundle extras = intent.getExtras();
+                latitude = extras.getDouble("com.example.mapping.latitude");
+                longitude = extras.getDouble("com.example.mapping.longitude");
+                zoom = extras.getInt("com.example.mapping.zoom");
+                mv = findViewById(R.id.map1);
+                mv.setBuiltInZoomControls(true);
+                mv.getController().setZoom(zoom);
+                mv.getController().setCenter(new GeoPoint(latitude, longitude));
             }
         }
     }

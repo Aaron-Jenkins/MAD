@@ -1,5 +1,4 @@
 package com.example.mapping;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -8,20 +7,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import org.osmdroid.util.GeoPoint;
-
 public class SetLocationActivity extends AppCompatActivity implements View.OnClickListener {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_set_location);
 
+        // avoid npe
+        Double latitude = 51.05;
+        Double longitude = -0.72;
+        Integer zoom;
         Bundle extras = this.getIntent().getExtras();
-        Double latitude = extras.getDouble("com.example.mapping.latitude");
-        Double longitude = extras.getDouble("com.example.mapping.longitude");
-        Integer zoom = extras.getInt("com.example.mapping.zoom");
-
+        latitude = extras.getDouble("com.example.mapping.latitude");
+        longitude = extras.getDouble("com.example.mapping.longitude");
+        zoom = extras.getInt("com.example.mapping.zoom");
 
         // initialise default lat/long
         EditText et1 = (EditText) findViewById(R.id.et1);
@@ -93,24 +92,19 @@ public class SetLocationActivity extends AppCompatActivity implements View.OnCli
         EditText latEditText = (EditText) findViewById(R.id.et1);
         EditText lonEditText = (EditText) findViewById(R.id.et2);
 
-
-
         //get values and update location
         Double lon = parseLat(lonEditText);
-        Double lat = parseLat(latEditText);
+        Double lat = parseLong(latEditText);
 
         if(lon!=null && lat!=null) {
             latitude = lat;
             longitude = lon;
             bundle.putDouble("com.example.mapping.latitude",latitude);
             bundle.putDouble("com.example.mapping.longitude",longitude);
-            bundle.putDouble("com.example.mapping.latitude",latitude);
+            bundle.putInt("com.example.mapping.latitude",zoom);
             intent.putExtras(bundle);
             setResult(RESULT_OK, intent);
             finish();
         }
-
     }
-
-
 }
