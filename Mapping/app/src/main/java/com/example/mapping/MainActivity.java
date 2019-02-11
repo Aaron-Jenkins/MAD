@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
         setContentView(R.layout.activity_main);
 
+        //center map
         mv = findViewById(R.id.map1);
         mv.setBuiltInZoomControls(true);
         mv.getController().setZoom(zoom);
@@ -87,17 +88,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return false;
     }
 
-    protected void onActivityResult(int requestCode,int resultCode,Intent intent)
-    {
+    protected void onActivityResult(int requestCode,int resultCode,Intent intent) {
 
-        if(requestCode==0)
-        {
-            if (resultCode==RESULT_OK)
-            {
-                Bundle extras=intent.getExtras();
+
+        if (requestCode == 0) {
+
+            if (resultCode == RESULT_OK) {
+                Bundle extras = intent.getExtras();
                 boolean hikebikemap = extras.getBoolean("com.example.hikebikemap");
-                if(hikebikemap==true)
-                {
+                if (hikebikemap == true) {
                     mv.setTileSource(TileSourceFactory.HIKEBIKEMAP);
                 }
                 else

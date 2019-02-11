@@ -85,8 +85,8 @@ public class SetLocationActivity extends AppCompatActivity implements View.OnCli
         Intent intent = new Intent();
         Bundle bundle=new Bundle();
 
-        Double latitude = 51.05;
-        Double longitude = -0.72;
+        Double latitude;
+        Double longitude;
         Integer zoom = 16;
 
         EditText latEditText = (EditText) findViewById(R.id.et1);
@@ -101,7 +101,11 @@ public class SetLocationActivity extends AppCompatActivity implements View.OnCli
             longitude = lon;
             bundle.putDouble("com.example.mapping.latitude",latitude);
             bundle.putDouble("com.example.mapping.longitude",longitude);
+<<<<<<< HEAD
             bundle.putInt("com.example.mapping.latitude",zoom);
+=======
+            bundle.putDouble("com.example.mapping.zoom",zoom);
+>>>>>>> f46d122bdc244d3f585622778c8dea53f954fb9e
             intent.putExtras(bundle);
             setResult(RESULT_OK, intent);
             finish();
