@@ -13,21 +13,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener
-{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     MapView mv;
     Double latitude = 51.05;
     Double longitude = -0.72;
     Integer zoom = 16;
-    /** Called when the activity is first created. */
+
+    /**
+     * Called when the activity is first created.
+     */
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // This line sets the user agent, a requirement to download OSM maps
         Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
@@ -61,34 +63,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         */
     }
 
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        MenuInflater inflater=getMenuInflater();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        if(item.getItemId() == R.id.choosemap)
-        {
-            Intent intent = new Intent(this,MapChooseActivity.class);
-            startActivityForResult(intent,0);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.choosemap) {
+            Intent intent = new Intent(this, MapChooseActivity.class);
+            startActivityForResult(intent, 0);
             return true;
         } else if (item.getItemId() == R.id.SetLocation) {
-            Intent requestIntent = new Intent(this,SetLocationActivity.class);
-            Bundle bundle=new Bundle();
-            bundle.putDouble("com.example.mapping.latitude",latitude);
-            bundle.putDouble("com.example.mapping.longitude",longitude);
-            bundle.putInt("com.example.mapping.zoom",zoom);
+            Intent requestIntent = new Intent(this, SetLocationActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putDouble("com.example.mapping.latitude", latitude);
+            bundle.putDouble("com.example.mapping.longitude", longitude);
+            bundle.putInt("com.example.mapping.zoom", zoom);
             requestIntent.putExtras(bundle);
-            startActivityForResult(requestIntent,1);
+            startActivityForResult(requestIntent, 1);
             return true;
         }
         return false;
     }
 
-    protected void onActivityResult(int requestCode,int resultCode,Intent intent) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
 
         if (requestCode == 0) {
@@ -98,15 +97,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 boolean hikebikemap = extras.getBoolean("com.example.hikebikemap");
                 if (hikebikemap == true) {
                     mv.setTileSource(TileSourceFactory.HIKEBIKEMAP);
-                }
-                else
-                {
+                } else {
 
                     mv.setTileSource(TileSourceFactory.MAPNIK);
                 }
             }
-        } else  if(requestCode==1) {
-            Log.wtf("reqcode","request code is 1");
+        } else if (requestCode == 1) {
+            Log.wtf("reqcode", "request code is 1");
             // result from  choose location activity
             if (resultCode == RESULT_OK) {
                 Bundle extras = intent.getExtras();
