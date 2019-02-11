@@ -1,7 +1,6 @@
 package com.example.mapping;
 
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -10,10 +9,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
@@ -103,16 +98,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         } else if (requestCode == 1) {
-            Log.wtf("reqcode", "request code is 1");
             // result from  choose location activity
             if (resultCode == RESULT_OK) {
                 Bundle extras = intent.getExtras();
                 latitude = extras.getDouble("com.example.mapping.latitude");
                 longitude = extras.getDouble("com.example.mapping.longitude");
                 zoom = extras.getInt("com.example.mapping.zoom");
-                mv = findViewById(R.id.map1);
-                mv.setBuiltInZoomControls(true);
-                mv.getController().setZoom(zoom);
                 mv.getController().setCenter(new GeoPoint(latitude, longitude));
             }
         }

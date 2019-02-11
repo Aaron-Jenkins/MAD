@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class SetLocationActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -16,11 +17,10 @@ public class SetLocationActivity extends AppCompatActivity implements View.OnCli
         // avoid npe
         Double latitude = 51.05;
         Double longitude = -0.72;
-        Integer zoom;
         Bundle extras = this.getIntent().getExtras();
         latitude = extras.getDouble("com.example.mapping.latitude");
         longitude = extras.getDouble("com.example.mapping.longitude");
-        zoom = extras.getInt("com.example.mapping.zoom");
+        Integer zoom = extras.getInt("com.example.mapping.zoom");
 
         // initialise default lat/long
         EditText et1 = (EditText) findViewById(R.id.et1);
@@ -89,8 +89,8 @@ public class SetLocationActivity extends AppCompatActivity implements View.OnCli
         Double longitude;
         Integer zoom = 16;
 
-        EditText latEditText = (EditText) findViewById(R.id.et1);
-        EditText lonEditText = (EditText) findViewById(R.id.et2);
+        EditText latEditText = findViewById(R.id.et1);
+        EditText lonEditText = findViewById(R.id.et2);
 
         //get values and update location
         Double lon = parseLat(lonEditText);
