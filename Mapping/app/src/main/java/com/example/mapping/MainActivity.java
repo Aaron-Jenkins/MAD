@@ -101,9 +101,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // result from  choose location activity
             if (resultCode == RESULT_OK) {
                 Bundle extras = intent.getExtras();
-                latitude = extras.getDouble("com.example.mapping.latitude");
-                longitude = extras.getDouble("com.example.mapping.longitude");
-                zoom = extras.getInt("com.example.mapping.zoom");
+                double latitude = extras.getDouble("com.example.mapping.latitude");
+                double longitude = extras.getDouble("com.example.mapping.longitude");
                 mv.getController().setCenter(new GeoPoint(latitude, longitude));
             }
         }

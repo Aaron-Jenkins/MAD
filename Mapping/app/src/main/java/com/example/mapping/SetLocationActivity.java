@@ -15,18 +15,17 @@ public class SetLocationActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_set_location);
 
         // avoid npe
-        Double latitude = 51.05;
-        Double longitude = -0.72;
+        double latitude = 51.05;
+        double longitude = -0.72;
         Bundle extras = this.getIntent().getExtras();
         latitude = extras.getDouble("com.example.mapping.latitude");
         longitude = extras.getDouble("com.example.mapping.longitude");
-        Integer zoom = extras.getInt("com.example.mapping.zoom");
 
         // initialise default lat/long
         EditText et1 = (EditText) findViewById(R.id.et1);
-        et1.setText(latitude.toString());
+        et1.setText(Double.toString(latitude));
         EditText et2 = (EditText) findViewById(R.id.et2);
-        et2.setText(longitude.toString());
+        et2.setText(Double.toString(longitude));
 
         Button b = (Button)findViewById(R.id.btn1);
         b.setOnClickListener(this);
@@ -85,23 +84,17 @@ public class SetLocationActivity extends AppCompatActivity implements View.OnCli
         Intent intent = new Intent();
         Bundle bundle=new Bundle();
 
-        Double latitude;
-        Double longitude;
-        Integer zoom = 16;
-
         EditText latEditText = findViewById(R.id.et1);
         EditText lonEditText = findViewById(R.id.et2);
 
         //get values and update location
-        Double lon = parseLat(lonEditText);
-        Double lat = parseLong(latEditText);
+        Double lat = parseLat(latEditText);
+        Double lon = parseLong(lonEditText);
+
 
         if(lon!=null && lat!=null) {
-            latitude = lat;
-            longitude = lon;
-            bundle.putDouble("com.example.mapping.latitude",latitude);
-            bundle.putDouble("com.example.mapping.longitude",longitude);
-            bundle.putInt("com.example.mapping.latitude",zoom);
+            bundle.putDouble("com.example.mapping.latitude",lat);
+            bundle.putDouble("com.example.mapping.longitude",lon);
             intent.putExtras(bundle);
             setResult(RESULT_OK, intent);
             finish();
