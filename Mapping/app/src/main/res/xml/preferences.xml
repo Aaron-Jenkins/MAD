@@ -16,4 +16,10 @@
         android:key="zoom"
         android:summary="Default Zoom to show the map at initially."
         android:title="Zoom" />
+    <ListPreference
+        android:entries="@array/mapPreference"
+        android:entryValues="@array/mapPreferenceCodes"
+        android:key="mapPref"
+        android:summary="Default type of map to load at start"
+        android:title="Map Preference" />
 </PreferenceScreen>

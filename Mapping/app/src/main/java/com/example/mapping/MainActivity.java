@@ -2,6 +2,7 @@ package com.example.mapping;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.service.quicksettings.Tile;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,7 +15,9 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import java.util.Objects;
+
+public class MainActivity extends AppCompatActivity {
     MapView mv;
     Double latitude = 51.05;
     Double longitude = -0.72;
@@ -41,37 +44,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mv.getController().setZoom(zoom);
         mv.getController().setCenter(new GeoPoint(latitude, longitude));
 
-
-        /*
-        TextView tv1 = (TextView) findViewById(R.id.tv1);
-        EditText et1 = (EditText) findViewById(R.id.et1);
-        TextView tv2 = (TextView) findViewById(R.id.tv2);
-        EditText et2 = (EditText) findViewById(R.id.et2);
-        Button b = (Button)findViewById(R.id.btn1);
-        b.setOnClickListener(this);
-        */
     }
     public void onResume()
     {
         super.onResume();
+        // Get preferences
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        double lat = Double.parseDouble ( prefs.getString("lat", "50.9") );
-        double lon = Double.parseDouble ( prefs.getString("lon", "-1.4") );
-        boolean autodownload = prefs.getBoolean("autodownload", true);
+        double lat = Double.parseDouble (Objects.requireNonNull(prefs.getString("lat", "50.9")));
+        double lon = Double.parseDouble (Objects.requireNonNull(prefs.getString("lon", "-1.4")));
+        int zoom = Integer.parseInt(Objects.requireNonNull(prefs.getString("zoom", "11")));
+        String viewType = prefs.getString("mapPref", "MAPNIK");
+
+        // Set preferences
         mv.getController().setCenter(new GeoPoint(lat,lon));
-
-    }
-
-    public void onClick(View view) {
-        /*
-        EditText latEditText = (EditText) findViewById(R.id.et1);
-        EditText lonEditText = (EditText) findViewById(R.id.et2);
-
-        //get values and update location
-        Double lon = parseLat(lonEditText);
-        Double lat = parseLat(latEditText);
-        mv.getController().setCenter(new GeoPoint(lat, lon));
-        */
+        mv.getController().setZoom(zoom);
+        if (Objects.equals(viewType, "normal")) {
+            mv.setTileSource(TileSourceFactory.MAPNIK);
+        } else if (Objects.equals(viewType, "cycle")) {
+            mv.setTileSource(TileSourceFactory.HIKEBIKEMAP);
+        }
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
